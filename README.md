@@ -3,11 +3,21 @@
 * Describe key: `C-h k`
 * `view-lossage` shows the history of commands
 
+## Buffers
+* Open a new file with `C-x C-f` creates a new buffer
+* Switch between buffers `C-x b` (and enter name if not the one suggested or `?` for more info)
+* Create a new buffer with a name `C-x b` and enter name
+* Kill a buffer `C-x k`
+* List all buffers `C-x C-b`
+* `ibuffer` (bound to `C-x C-b`): mark buffers for deletion with `d` and execute with `x`.
+
+## Packages
 * `M-x package-refresh-contents` to reload packages
 * Instead of re-opening emacs after editing `.emacs` do `C-x C-e` or try `revert-buffer`
 
-## package `try`
+### package `try`
 * `M-x try` and package name let's you try packages without installing them
+
 
 ## Org-mode
 * Adding a link `C-c C-l`
