@@ -11,6 +11,20 @@
 * List all buffers `C-x C-b`
 * `ibuffer` (bound to `C-x C-b`): mark buffers for deletion with `d` and execute with `x`.
 
+## Windows
+* `C-x 3` splits vertically
+* `C-x 1` to kill all other windows
+* `C-x 0` to kill the current window and go to the other
+
+### winner-mode
+* `(winner-mode 1)`
+* Remembers window configuration
+* `C-c left/right` to go back and forth in window configuration
+
+### windowmove
+* `(windmove-default-keybindings)`
+* Allows you to navigate between windows using Shift + arrow keys
+
 ## Packages
 * `M-x package-refresh-contents` to reload packages
 * Instead of re-opening emacs after editing `.emacs` do `C-x C-e` or try `revert-buffer`
