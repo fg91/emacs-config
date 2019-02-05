@@ -2,6 +2,10 @@
 * Get help with function `C-h f`
 * Describe key: `C-h k`
 * `view-lossage` shows the history of commands
+* `describe-package`
+* `M-q` converts long line to paragraph
+* One word for or back `M-f/b`
+* `customize-themes`
 
 ## Buffers
 * Open a new file with `C-x C-f` creates a new buffer
@@ -28,10 +32,17 @@
 ## Packages
 * `M-x package-refresh-contents` to reload packages
 * Instead of re-opening emacs after editing `.emacs` do `C-x C-e` or try `revert-buffer`
+* `:init` sets things before it loads the package, `:config` after.
 
 ### package `try`
 * `M-x try` and package name let's you try packages without installing them
 
+### swiper
+* Better search function
+* Supports regex
+
+### avy
+* `M-s` to search for character on screen
 
 ## Org-mode
 * Adding a link `C-c C-l`
