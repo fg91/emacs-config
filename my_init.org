@@ -1,0 +1,128 @@
+* Adjusting the interface
+** General adjustments
+
+#+BEGIN_SRC emacs-lisp
+(setq inhibit-startup-message t)
+(fset 'yes-or-no-p 'y-or-n-p)
+(global-set-key (kbd "<f5>") 'revert-buffer)
+#+END_SRC
+
+** Appearance
+   Choosing a custom theme
+
+#+BEGIN_SRC emacs-lisp
+(load-theme 'deeper-blue t)
+;; (use-package color-theme
+;;   :ensure t)
+#+END_SRC
+
+* try
+  Let's you try a package without installing it
+
+#+BEGIN_SRC emacs-lisp
+(use-package try
+  :ensure t)
+#+END_SRC 
+
+* Getting help
+  - Get explainations for keys or lips functions
+
+#+BEGIN_SRC emacs-lisp
+(use-package which-key
+  :ensure t
+  :config (which-key-mode))
+#+END_SRC  
+
+* Auto-completion
+** IDO
+#+BEGIN_SRC emacs-lisp
+(setq ido-enable-flex-matching t)
+(setq ido-everywhere t)
+(ido-mode 1)
+#+END_SRC
+
+** auto-complete
+
+#+BEGIN_SRC emacs-lisp
+(use-package auto-complete
+  :ensure t
+  :init
+  (progn
+    (ac-config-default)
+    (global-auto-complete-mode t)
+    ))
+#+END_SRC
+
+* Buffer management
+** ibuffer
+   nicer overview of list-buffers where you can kill windows...
+
+#+BEGIN_SRC emacs-lisp
+(defalias 'list-buffers 'ibuffer)
+;; (defalias 'list-buffers 'ibuffer-other-window)
+#+END_SRC
+
+* Window management
+** winner-mode
+
+#+BEGIN_SRC emacs-lisp
+(winner-mode 1)
+#+END_SRC
+
+** windmove
+
+#+BEGIN_SRC emacs-lisp
+(windmove-default-keybindings)
+#+END_SRC
+
+** ace-window
+   Shows a number on each window on `C-x o`
+
+#+BEGIN_SRC emacs-lisp
+(use-package ace-window
+  :ensure t
+  :init
+  (progn  ;; if you have more than 1 instruction for init, enclose it in progn, actually not necessary any more, just 1 left
+    (global-set-key [remap other-window] 'ace-window)
+    ))
+#+END_SRC
+
+* Searching
+** swiper
+
+#+BEGIN_SRC emacs-lisp
+; so that swiper works functionality works with C-x C-f
+(use-package counsel
+  :ensure t
+  )
+
+(use-package swiper
+  :ensure try
+  :bind (("C-s" . swiper)
+	 ("C-r" . swiper)
+	 ("C-c C-r" . ivy-resume)
+	 ("M-x" . counsel-M-x)
+	 ("C-x C-f" . counsel-find-file))
+  :config
+  (progn
+    (ivy-mode 1)
+    (setq ivy-use-virtual-buffers t)
+    (setq ivy-display-style 'fancy)
+    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+    ))
+#+END_SRC
+
+** avy
+
+#+BEGIN_SRC emacs-lisp
+(use-package avy
+  :ensure t
+  :bind ("M-s" . avy-goto-char))
+
+#+END_SRC
+
+
+
+
+
+

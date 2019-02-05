@@ -48,6 +48,9 @@
 * Adding a link `C-c C-l`
 * Move levels up and down `M-up`
 * `#+STARTUP: showall` at beginning of `.org` document to avoid showing the collapsed view on startup
+* Run lisp functions `C-c C-c`
+* To open function in separate window `C-c '` (might have to do manual install of org using `package-install`)
+* Make a code block `<s` and `tab`
 
 ## Elisp
 * Everything in parenthesis is a function: `(+ 2 3)` would mean *run the + function on 2 and 3* (run with `eval-last-sexp` or `C-x C-e`)
