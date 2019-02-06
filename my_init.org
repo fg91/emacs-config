@@ -5,20 +5,20 @@
 * Adjusting the interface
 ** General adjustments
 
-#+BEGIN_SRC emacs-lisp
-(setq inhibit-startup-message t)
-(fset 'yes-or-no-p 'y-or-n-p)
-(global-set-key (kbd "<f5>") 'revert-buffer)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (setq inhibit-startup-message t)
+     (fset 'yes-or-no-p 'y-or-n-p)
+     (global-set-key (kbd "<f5>") 'revert-buffer)
+   #+END_SRC
 
 ** Appearance
    - `customize-themes`
 
-#+BEGIN_SRC emacs-lisp
-(load-theme 'deeper-blue t)
-;; (use-package color-theme
-;;   :ensure t)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (load-theme 'deeper-blue t)
+     ;; (use-package color-theme
+     ;;   :ensure t)
+   #+END_SRC
 
 * Package management
   - `M-x package-refresh-contents` to reload packages
@@ -27,10 +27,10 @@
 ** try
    - `M-x try` and package name let's you try packages without installing them
 
-#+BEGIN_SRC emacs-lisp
-(use-package try
-  :ensure t)
-#+END_SRC 
+   #+BEGIN_SRC emacs-lisp
+     (use-package try
+       :ensure t)
+   #+END_SRC 
   
 * Getting help
   - Get help with function `C-h f`
@@ -38,31 +38,32 @@
   - `describe-package`
   - `view-lossage` shows the history of commands
 
-#+BEGIN_SRC emacs-lisp
-(use-package which-key
-  :ensure t
-  :config (which-key-mode))
-#+END_SRC  
+  #+BEGIN_SRC emacs-lisp
+    (use-package which-key
+      :ensure t
+      :config (which-key-mode))
+  #+END_SRC  
 
 * Auto-completion
 ** IDO
-#+BEGIN_SRC emacs-lisp
-(setq ido-enable-flex-matching t)
-(setq ido-everywhere t)
-(ido-mode 1)
-#+END_SRC
+   
+   #+BEGIN_SRC emacs-lisp
+     (setq ido-enable-flex-matching t)
+     (setq ido-everywhere t)
+     (ido-mode 1)
+   #+END_SRC
 
 ** auto-complete
 
-#+BEGIN_SRC emacs-lisp
-(use-package auto-complete
-  :ensure t
-  :init
-  (progn
-    (ac-config-default)
-    (global-auto-complete-mode t)
-    ))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package auto-complete
+       :ensure t
+       :init
+       (progn
+         (ac-config-default)
+         (global-auto-complete-mode t)
+         ))
+   #+END_SRC
 
 * Buffer management
   - Open a new file with `C-x C-f` creates a new buffer
@@ -70,10 +71,10 @@
   - Kill buffer `C-x k`
   - List all buffers `C-x C-b`
 
-#+BEGIN_SRC emacs-lisp
-(defalias 'list-buffers 'ibuffer)
-;; (defalias 'list-buffers 'ibuffer-other-window)
-#+END_SRC
+  #+BEGIN_SRC emacs-lisp
+    (defalias 'list-buffers 'ibuffer)
+    ;; (defalias 'list-buffers 'ibuffer-other-window)
+  #+END_SRC
    
 * Window management
   - `C-x 3` splits vertically
@@ -83,64 +84,63 @@
 ** winner-mode
    - Remembers window configuration
    - `C-c left/right` to go back and forth in window configuration
-#+BEGIN_SRC emacs-lisp
-(winner-mode 1)
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (winner-mode 1)
+   #+END_SRC
 
 ** windmove
    - Allows you to navigate between windows using Shift + arrow keys
-#+BEGIN_SRC emacs-lisp
-(windmove-default-keybindings)
-#+END_SRC
+   
+   #+BEGIN_SRC emacs-lisp
+     (windmove-default-keybindings)
+   #+END_SRC
 
 ** ace-window
    - Shows a number on each window on `C-x o`
 
-#+BEGIN_SRC emacs-lisp
-(use-package ace-window
-  :ensure t
-  :init
-  (progn  ;; if you have more than 1 instruction for init, enclose it in progn, actually not necessary any more, just 1 left
-    (global-set-key [remap other-window] 'ace-window)
-    ))
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package ace-window
+       :ensure t
+       :init
+       (progn  ;; if you have more than 1 instruction for init, enclose it in progn, actually not necessary any more, just 1 left
+         (global-set-key [remap other-window] 'ace-window)
+         ))
+   #+END_SRC
 
 * Searching
 ** swiper
    - Better search function
    - Supports regex
+     #+BEGIN_SRC emacs-lisp
+       ; so that swiper functionality works with C-x C-f
+       (use-package counsel
+         :ensure t
+         )
 
-#+BEGIN_SRC emacs-lisp
-; so that swiper functionality works with C-x C-f
-(use-package counsel
-  :ensure t
-  )
-
-(use-package swiper
-  :ensure try
-  :bind (("C-s" . swiper)
-	 ("C-r" . swiper)
-	 ("C-c C-r" . ivy-resume)
-	 ("M-x" . counsel-M-x)
-	 ("C-x C-f" . counsel-find-file))
-  :config
-  (progn
-    (ivy-mode 1)
-    (setq ivy-use-virtual-buffers t)
-    (setq ivy-display-style 'fancy)
-    (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
-    ))
-#+END_SRC
+       (use-package swiper
+         :ensure try
+         :bind (("C-s" . swiper)
+                ("C-r" . swiper)
+                ("C-c C-r" . ivy-resume)
+                ("M-x" . counsel-M-x)
+                ("C-x C-f" . counsel-find-file))
+         :config
+         (progn
+           (ivy-mode 1)
+           (setq ivy-use-virtual-buffers t)
+           (setq ivy-display-style 'fancy)
+           (define-key read-expression-map (kbd "C-r") 'counsel-expression-history)
+           ))
+     #+END_SRC
 
 ** avy
    - `M-s` to search for character on screen
 
-#+BEGIN_SRC emacs-lisp
-(use-package avy
-  :ensure t
-  :bind ("M-s" . avy-goto-char))
-
-#+END_SRC
+   #+BEGIN_SRC emacs-lisp
+     (use-package avy
+       :ensure t
+       :bind ("M-s" . avy-goto-char))
+   #+END_SRC
 
 * Org-mode
   - Adding a link `C-c C-l`
@@ -154,6 +154,79 @@
   - Set variable `(setq v 100)`. You could now `(+ v v)` and get the result with `C-x C-e` or `C-j`
   - `C-a` calls `(move-beginning-of-line nil)` and you could get the same effect runnig `C-x C-e` on this!
   - `C-p` is equiv to `(previous-line)` and `(previous-line 5)` would jump 5 lines up
+* Flycheck
+  You might have to manually install something like pylint
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package flycheck
+      :ensure t
+      :init
+      (global-flycheck-mode t))
+  #+END_SRC
+* Python
+  - get a console for the output `C-c C-p`
+  - run code `C-c C-c`
+** Fix bug 'Your ‘python-shell-interpreter’ doesn’t seem to support readline' 
+   #+BEGIN_SRC emacs-lisp
+   (with-eval-after-load 'python
+   (defun python-shell-completion-native-try ()
+    "Return non-nil if can trigger native completion."
+    (let ((python-shell-completion-native-enable t)
+          (python-shell-completion-native-output-timeout
+           python-shell-completion-native-try-output-timeout))
+      (python-shell-completion-native-get-completions
+       (get-buffer-process (current-buffer))
+       nil "_"))))
+   #+END_SRC
+** Jedi
+   Completion package for python
 
+   # #+BEGIN_SRC emacs-lisp
+   #   (use-package epc
+   #     :ensure)
+   #   (use-package jedi
+   #     :ensure t
+   #     :init
+   #     (add-hook 'python-mode-hook 'jedi:setup)
+   #     (add-hook 'python-mode-hook 'jedi:ac-setup))
+   # #+END_SRC
+** elpy
+   - `C-c C-d` brings up documentation of functions, ...
+   
+   #+BEGIN_SRC emacs-lisp
+     (use-package elpy
+       :ensure t
+       :config
+       (elpy-enable))
+   #+END_SRC
+* Yasnippet
+ - chunks of code that you can easily expand
+ - you can put your own snippets in .emacs.d/snippets
+   
+   #+BEGIN_SRC emacs-lisp
+     (use-package yasnippet
+       :ensure t
+       :init
+       (yas-global-mode 1))
+   #+END_SRC
+* cpplint
 
+  #+BEGIN_SRC emacs-lisp
+    (use-package flymake-google-cpplint
+      :ensure t
+      :config
+      (custom-set-variables '(flymake-google-cpplint-command "cpplint")))
+
+    (use-package flymake-cursor
+      :ensure t)
+
+    (add-hook 'c-mode-hook 'flymake-google-cpplint)
+    (add-hook 'c++-mode-hook 'flymake-google-cpplint-load)
+  #+END_SRC
+* gnuplot-mode
+  #+BEGIN_SRC emacs-lisp
+    (use-package gnuplot-mode
+      :ensure t
+      :config
+      (setq auto-mode-alist (append '(("\\.gnuplot$" . gnuplot-mode)) auto-mode-alist)))
+  #+END_SRC
