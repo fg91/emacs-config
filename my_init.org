@@ -116,6 +116,8 @@
 ** swiper
    - Better search function
    - Supports regex
+   - To use normal search function `isearch-forward`
+
      #+BEGIN_SRC emacs-lisp
        ; so that swiper functionality works with C-x C-f
        (use-package counsel
@@ -148,18 +150,25 @@
    #+END_SRC
 
 * Org-mode
-  - Adding a link `C-c C-l`
-  - Move levels up and down `M-up`
-  - `#+STARTUP: showall` at beginning of `.org` document to avoid showing the collapsed view on startup
-  - Run lisp functions `C-c C-c`
-  - To open function in separate window `C-c '` (might have to do manual install of org using `package-install`)
-  - Make a code block `<s` and `tab`
-  
+** General
+   - Adding a link `C-c C-l`
+   - Move levels up and down `M-up`
+   - `#+STARTUP: showall` at beginning of `.org` document to avoid showing the collapsed view on startup
+   - Run lisp functions `C-c C-c`
+   - To open function in separate window `C-c '` (might have to do manual install of org using `package-install`)
+   - Make a code block `<s` and `tab`
 ** Timer
    - Start timer `C-c C-x 0`
    - Get timestamp `C-c C-x .`
    - Pause timer `C-c C-x ,`
    - Stop timer `C-u C-c C-x ,`
+** Tables
+*** Get one 'column' from csv
+    1) Convert to table `org-table-convert-region`
+    2) Mark a rectangle beginning in desired col and ending after desired col at end of csv
+    3) `kill-rectangle`
+    4) `yank-rectangle`
+    5) `string-rectangle` to insert text in every line of rectangle
 * Elisp
   - Everything in parenthesis is a function: `(+ 2 3)` would mean *run the + function on 2 and 3* (run with `eval-last-sexp` or `C-x C-e`)
   - Set variable `(setq v 100)`. You could now `(+ v v)` and get the result with `C-x C-e` or `C-j`
@@ -248,3 +257,23 @@
       :config
       (setq auto-mode-alist (append '(("\\.ledger$" . ledger-mode)) auto-mode-alist)))
   #+END_SRC
+* macros
+  - Start defining kbd macro with `C-x (` or `f3`
+  - Stop defining kbd macro with `C-x )` or `f4`
+  - Repeat macro with `C-x e` or `f4`
+  - Name last macro `name-last-kbd-macro` (for current session only)
+  - `insert-kbd-macro` returns macro definition at point (to save in .emacs)
+  - Insert macro counter: Start macro with `f3`, then pressing `f3` gives you the counter. End definition with `f4`
+* Undo
+** built-in
+   - `C -`
+** Unto Tree
+   - `C-x u` brings up the undo-tree
+   - `d` shows the differences
+
+   #+BEGIN_SRC emacs-lisp
+     (use-package undo-tree
+       :ensure t
+       :init
+       (global-undo-tree-mode))
+   #+END_SRC
