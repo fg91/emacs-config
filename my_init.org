@@ -93,6 +93,11 @@
    
    #+BEGIN_SRC emacs-lisp
      (windmove-default-keybindings)
+     ;; Make windmove work in Org mode:
+     (add-hook 'org-shiftup-final-hook 'windmove-up)
+     (add-hook 'org-shiftleft-final-hook 'windmove-left)
+     (add-hook 'org-shiftdown-final-hook 'windmove-down)
+     (add-hook 'org-shiftright-final-hook 'windmove-right)
    #+END_SRC
 
 ** ace-window
@@ -149,6 +154,12 @@
   - Run lisp functions `C-c C-c`
   - To open function in separate window `C-c '` (might have to do manual install of org using `package-install`)
   - Make a code block `<s` and `tab`
+  
+** Timer
+   - Start timer `C-c C-x 0`
+   - Get timestamp `C-c C-x .`
+   - Pause timer `C-c C-x ,`
+   - Stop timer `C-u C-c C-x ,`
 * Elisp
   - Everything in parenthesis is a function: `(+ 2 3)` would mean *run the + function on 2 and 3* (run with `eval-last-sexp` or `C-x C-e`)
   - Set variable `(setq v 100)`. You could now `(+ v v)` and get the result with `C-x C-e` or `C-j`
@@ -229,4 +240,11 @@
       :ensure t
       :config
       (setq auto-mode-alist (append '(("\\.gnuplot$" . gnuplot-mode)) auto-mode-alist)))
+  #+END_SRC
+* ledger-mode
+  #+BEGIN_SRC emacs-lisp
+    (use-package ledger-mode
+      :ensure t
+      :config
+      (setq auto-mode-alist (append '(("\\.ledger$" . ledger-mode)) auto-mode-alist)))
   #+END_SRC
