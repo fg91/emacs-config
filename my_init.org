@@ -9,6 +9,7 @@
      (setq inhibit-startup-message t)
      (fset 'yes-or-no-p 'y-or-n-p)
      (global-set-key (kbd "<f5>") 'revert-buffer)
+     (global-hl-line-mode t)
    #+END_SRC
 
 ** Appearance
@@ -35,6 +36,7 @@
 * Getting help
   - Get help with function `C-h f`
   - Describe key: `C-h k`
+  - Describe variable `C-h v`
   - `describe-package`
   - `view-lossage` shows the history of commands
 
@@ -122,7 +124,10 @@
        ; so that swiper functionality works with C-x C-f
        (use-package counsel
          :ensure t
-         )
+         :bind  ;; for better kill ring functionality
+         (("M-y" . counsel-yank-pop)
+          :map ivy-minibuffer-map
+          ("M-y" . ivy-next-line)))
 
        (use-package swiper
          :ensure try
@@ -174,6 +179,9 @@
   - Set variable `(setq v 100)`. You could now `(+ v v)` and get the result with `C-x C-e` or `C-j`
   - `C-a` calls `(move-beginning-of-line nil)` and you could get the same effect runnig `C-x C-e` on this!
   - `C-p` is equiv to `(previous-line)` and `(previous-line 5)` would jump 5 lines up
+** load a file of elisp commands
+   Loads the file and runs it as if it were in the file that you load it from:
+   (load-file "some-file.el")
 * Flycheck
   You might have to manually install something like pylint
 
@@ -277,3 +285,41 @@
        :init
        (global-undo-tree-mode))
    #+END_SRC
+* hungry delete
+  i.e. deletes all blank lines at once on `del`
+  #+BEGIN_SRC emacs-lisp
+    (use-package hungry-delete
+      :ensure t
+      :config
+      (global-hungry-delete-mode))
+  #+END_SRC
+* expand-region
+  - Press `C-v` to start
+  - Press `v` to expand region, `-` to reduce it
+
+  #+BEGIN_SRC emacs-lisp
+    (use-package expand-region
+      :ensure t
+      :config
+      (global-set-key (kbd "C-v") 'er/expand-region))
+  #+END_SRC
+* iedit
+  - Go over a word you want to change in the entire buffer press `C-c;`, 
+    edit the word (changes will appear in all occurences) and
+    press the same kbd to end iedit mode.
+  - if you want to do this only for a certain region, mark it and do `narrow-to-region`.
+    edit what you want with iedit and end with `widen`
+  
+  #+BEGIN_SRC emacs-lisp
+    (use-package iedit
+      :ensure
+      :config
+      (global-set-key (kbd "C-c ;") 'iedit-mode))
+  #+END_SRC
+* Misc
+** auto-load files when changed on disc (important when using different computers)
+   
+   #+BEGIN_SRC emacs-lisp
+     (global-auto-revert-mode 1)
+   #+END_SRC
+
