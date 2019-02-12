@@ -1,7 +1,21 @@
-* General
+* Genera
 ** Useful keys
    - `M-q` converts long line to paragraph
    - One word for or back `M-f/b`
+   
+** Hotkeys to open files
+
+#+BEGIN_SRC emacs-lisp
+  (global-set-key (kbd "\e\ei")
+                  (lambda () (interactive) (find-file "~/Dropbox/orgfiles/i.org")))
+
+  (global-set-key (kbd "\e\el")
+                  (lambda () (interactive) (find-file "~/Dropbox/orgfiles/links.org")))
+
+  (global-set-key (kbd "\e\es")
+                  (lambda () (interactive) (find-file "~/ml/emacs-commands/my_init.org")))
+
+#+END_SRC
 * Adjusting the interface
 ** General adjustments
 
@@ -158,10 +172,43 @@
 ** General
    - Adding a link `C-c C-l`
    - Move levels up and down `M-up`
+   - `C-c C-x C-w/M-w` kill/copy subtree
+   - `C-c C-w` Refile subtree
    - `#+STARTUP: showall` at beginning of `.org` document to avoid showing the collapsed view on startup
    - Run lisp functions `C-c C-c`
    - To open function in separate window `C-c '` (might have to do manual install of org using `package-install`)
    - Make a code block `<s` and `tab`
+
+     #+BEGIN_SRC emacs-lisp
+       (custom-set-variables
+        '(org-directory "~/Dropbox/orgfiles")
+        '(org-export-html-postamble nil)
+        '(org-hide-leading-stars t)
+        '(org-startup-folded (quote-overview))
+        '(org-startup-indented t)
+        )
+
+       (setq org-file-apps
+             (append '(
+                       ("\\.pdf\\'" . "open")
+                       ) org-file-apps))
+
+       (global-set-key "\C-ca" 'org-agenda)
+
+       (use-package org-ac
+         :ensure t
+         :init (progn
+                 (require 'org-ac)
+                 (org-ac/config-default)
+                 ))
+
+       (global-set-key (kbd "C-c c") 'org-capture)
+       (setq org-agenda-files (list "~/Dropbox/orgfiles/gcal.org"
+                                    "~/Dropbox/orgfiles/index.org"
+                                    "~/Dropbox/orgfiles/schedule.org"))
+
+
+     #+END_SRC
 ** Timer
    - Start timer `C-c C-x 0`
    - Get timestamp `C-c C-x .`
@@ -174,6 +221,32 @@
     3) `kill-rectangle`
     4) `yank-rectangle`
     5) `string-rectangle` to insert text in every line of rectangle
+** Org-capture 
+
+Custom org-captures
+
+#+BEGIN_SRC emacs-lisp
+  (setenv "BROWSER" "chromium-browser")
+
+  (setq org-capture-templates
+        '(("a" "Appointment" entry (file  "~/Dropbox/orgfiles/gcal.org" )
+           "* %?\n\n%^T\n\n:PROPERTIES:\n\n:END:\n\n")
+          ("l" "Link" entry (file+headline "~/Dropbox/orgfiles/links.org" "Links")
+           "* %? %^L %^g \n%T" :prepend t)
+          ("b" "Blog idea" entry (file+headline "~/Dropbox/orgfiles/i.org" "Blog Topics:")
+           "* %?\n%T" :prepend t)
+          ("t" "To Do Item" entry (file+headline "~/Dropbox/orgfiles/i.org" "To Do and Notes")
+           "* TODO %?\n%u" :prepend t)
+          ("m" "Mail To Do" entry (file+headline "~/Dropbox/orgfiles/i.org" "To Do and Notes")
+           "* TODO %a\n %?" :prepend t)
+          ("g" "GMail To Do" entry (file+headline "~/Dropbox/orgfiles/i.org" "To Do and Notes")
+           "* TODO %^L\n %?" :prepend t)
+          ("n" "Note" entry (file+headline "~/Dropbox/orgfiles/i.org" "Notes")
+           "* %u %? " :prepend t)
+          ))
+
+#+END_SRC
+
 * Elisp
   - Everything in parenthesis is a function: `(+ 2 3)` would mean *run the + function on 2 and 3* (run with `eval-last-sexp` or `C-x C-e`)
   - Set variable `(setq v 100)`. You could now `(+ v v)` and get the result with `C-x C-e` or `C-j`
@@ -294,14 +367,14 @@
       (global-hungry-delete-mode))
   #+END_SRC
 * expand-region
-  - Press `C-v` to start
-  - Press `v` to expand region, `-` to reduce it
+  - Press `C-b` to start
+  - Press `b` to expand region, `-` to reduce it
 
   #+BEGIN_SRC emacs-lisp
     (use-package expand-region
       :ensure t
       :config
-      (global-set-key (kbd "C-v") 'er/expand-region))
+      (global-set-key (kbd "C-b") 'er/expand-region))
   #+END_SRC
 * iedit
   - Go over a word you want to change in the entire buffer press `C-c;`, 
@@ -322,4 +395,31 @@
    #+BEGIN_SRC emacs-lisp
      (global-auto-revert-mode 1)
    #+END_SRC
+* tramp
+** Modify files on remote servers:
+- `C-x C-f`, delete everything to root, type 'ssh:<server address>:<file>'
+- You can even open a shell/eshell on the remote machine
 
+** root edit files
+`C-x C-f`, delete everyithing to root and type `sudo::<file path>`
+
+** Remote root edit files
+`C-x C-f`, delete everything to root and type `ssh:<server address>|sudo:<server-address>:<file path>`
+
+* shell and eshell
+- Type `shell` or `eshell` to get a shell
+- eshell let's you type also emacs commands!
+- eshell let's you cd into a remote directory using `cd
+  /ssh:<server-address>:` and with `cd #` you are back in your own
+  home directoy. Of course you can also normally ssh into a remote
+  directory but then you can't use emacs commands
+- There is also the package better-shell to play with
+* rectangle editing
+- `C-x space` to mark a rectangle (if you mark rectangle like this,
+  you can actually wank and yank normally)
+- `C-x r k` to kill rectangle
+- `C-x r y` to yank rectangle
+- `C-x r o` to open rectangle (space in every line)
+- Mark rectangle and do `string-insert-rectangle` or `string-rectangle`
+  to add string to every line in redctangle/edit every line in
+  rectangle
