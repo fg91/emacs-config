@@ -15,6 +15,9 @@
   (global-set-key (kbd "\e\es")
                   (lambda () (interactive) (find-file "~/ml/emacs-commands/my_init.org")))
 
+  (global-set-key (kbd "\e\ed")
+                  (lambda () (interactive) (find-file "~/ownCloud/promotion/dissertation/dissertation_fabio_graetz.tex")))
+
 #+END_SRC
 * Adjusting the interface
 ** General adjustments
@@ -133,6 +136,8 @@
    - Better search function
    - Supports regex
    - To use normal search function `isearch-forward`
+   - use `counsel-ag` for silversearcher (`C-c C-p` to open search list in buffer)
+     
 
      #+BEGIN_SRC emacs-lisp
        ; so that swiper functionality works with C-x C-f
@@ -423,3 +428,31 @@ Custom org-captures
 - Mark rectangle and do `string-insert-rectangle` or `string-rectangle`
   to add string to every line in redctangle/edit every line in
   rectangle
+* c++
+- `compile` to compile. Press `g` in compilation buffer to recompile
+- `next-error` (if you have a makefile it also brings you to errors in
+  cpp files that are not open currently)
+- `C-c C-f` enters 'next error follow mode'
+- g++ -MM main.cpp will tell you the dependencies
+  
+* ggtags and global
+- [[https://astraybi.wordpress.com/2015/08/01/how-to-setup-gnu-global-for-emacs-mac/][Installation instructions]]
+- `gtags -v` in directory to start using with this project
+- `M-.` to jump to definition
+- Try the functions (gtags-find-tag), (gtags-find-rtag), (gtags-find-symbol), and (gtags-pop-stack)
+  
+  #+BEGIN_SRC emacs-lisp
+    (use-package ggtags  ;; you have to apt-get install global
+      :ensure t
+      :config
+      (add-hook 'c-mode-common-hook
+                (lambda ()
+                  (when (derived-mode-p 'c-mode 'c++-mode)
+                    (ggtags-mode 1))))
+      )
+
+    (setq load-path (cons "/opt/local/bin/global" load-path))
+    (setq load-path (cons "/opt/local/bin/gtags" load-path))
+    (setq load-path (cons "~/.emacs.d/gtags.el" load-path))
+    (autoload 'gtags-mode "gtags" "" t)
+  #+END_SRC
