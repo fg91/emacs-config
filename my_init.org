@@ -419,6 +419,14 @@ Custom org-captures
   home directoy. Of course you can also normally ssh into a remote
   directory but then you can't use emacs commands
 - There is also the package better-shell to play with
+  
+#+BEGIN_SRC emacs-lisp
+(defun eshell/clear ()
+  "Clear the eshell buffer."
+  (let ((inhibit-read-only t))
+    (erase-buffer)))
+#+END_SRC
+    
 * rectangle editing
 - `C-x space` to mark a rectangle (if you mark rectangle like this,
   you can actually wank and yank normally)
@@ -456,3 +464,6 @@ Custom org-captures
     (setq load-path (cons "~/.emacs.d/gtags.el" load-path))
     (autoload 'gtags-mode "gtags" "" t)
   #+END_SRC
+
+
+
