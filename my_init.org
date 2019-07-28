@@ -464,13 +464,20 @@ Custom org-captures
     (setq load-path (cons "~/.emacs.d/gtags.el" load-path))
     (autoload 'gtags-mode "gtags" "" t)
   #+END_SRC
-* dumbjump
+* dumb-jump
+- If you want to enabale dumb-jump to find tags i.e. in Python
+  libraries, add a .dumbjump file in the project repository containing
+  the path, i.e.:
+  +~/anaconda3/lib/python3.6/site-packages/torch/
+
 #+BEGIN_SRC emacs-lisp
-  (use-package dumb-jump
-    :bind (("M-g o" . dumb-jump-go-other-window)
-           ("M-g j" . dumb-jump-go)
-           ("M-g x" . dumb-jump-go-prefer-external)
-           ("M-g z" . dumb-jump-go-prefer-external-other-window))
-    :config (setq dumb-jump-selector 'ivy)
-    :ensure)
+    (use-package dumb-jump
+      :bind (("M-d g" . dumb-jump-go)
+             ("M-d p" . dumb-jump-go-prompt)
+             ("M-d b" . dumb-jump-back))
+      :config (progn
+                (setq dumb-jump-selector 'ivy)
+                (setq dumb-jump-force-searcher 'ag)
+                )
+      :ensure)
 #+END_SRC
