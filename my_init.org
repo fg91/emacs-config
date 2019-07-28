@@ -1,4 +1,4 @@
-* Genera
+* General
 ** Useful keys
    - `M-q` converts long line to paragraph
    - One word for or back `M-f/b`
@@ -464,6 +464,13 @@ Custom org-captures
     (setq load-path (cons "~/.emacs.d/gtags.el" load-path))
     (autoload 'gtags-mode "gtags" "" t)
   #+END_SRC
-
-
-
+* dumbjump
+#+BEGIN_SRC emacs-lisp
+  (use-package dumb-jump
+    :bind (("M-g o" . dumb-jump-go-other-window)
+           ("M-g j" . dumb-jump-go)
+           ("M-g x" . dumb-jump-go-prefer-external)
+           ("M-g z" . dumb-jump-go-prefer-external-other-window))
+    :config (setq dumb-jump-selector 'ivy)
+    :ensure)
+#+END_SRC
