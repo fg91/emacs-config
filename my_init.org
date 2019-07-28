@@ -472,9 +472,9 @@ Custom org-captures
 
 #+BEGIN_SRC emacs-lisp
     (use-package dumb-jump
-      :bind (("M-d g" . dumb-jump-go)
-             ("M-d p" . dumb-jump-go-prompt)
-             ("M-d b" . dumb-jump-back))
+      :bind (("M-g g" . dumb-jump-go)
+             ("M-g p" . dumb-jump-go-prompt)
+             ("M-g b" . dumb-jump-back))
       :config (progn
                 (setq dumb-jump-selector 'ivy)
                 (setq dumb-jump-force-searcher 'ag)
