@@ -171,7 +171,7 @@
        :ensure t
        :bind ("M-s" . avy-goto-char))
    #+END_SRC
-
+   
 * Org-mode
 ** General
    - Adding a link `C-c C-l`
@@ -304,6 +304,12 @@ Custom org-captures
        :config
        (elpy-enable))
    #+END_SRC
+** Sort imports
+#+BEGIN_SRC emacs-lisp
+  (use-package pyimpsort
+    :ensure t)
+#+END_SRC 
+
 * Yasnippet
  - chunks of code that you can easily expand
  - you can put your own snippets in .emacs.d/snippets
