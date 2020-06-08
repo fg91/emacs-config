@@ -135,7 +135,6 @@
 ** swiper
    - Better search function
    - Supports regex
-   - To use normal search function `isearch-forward`
    - use `counsel-ag` for silversearcher (`C-c C-p` to open search list in buffer)
      
 
@@ -150,7 +149,7 @@
 
        (use-package swiper
          :ensure try
-         :bind (("C-s" . swiper)
+         :bind (("C-f" . swiper)
                 ("C-r" . swiper)
                 ("C-c C-r" . ivy-resume)
                 ("M-x" . counsel-M-x)
