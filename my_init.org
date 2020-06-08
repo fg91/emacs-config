@@ -307,8 +307,9 @@ Custom org-captures
    #+END_SRC
 ** Sort imports
 #+BEGIN_SRC emacs-lisp
-  (use-package pyimpsort
+  (use-package py-isort
     :ensure t)
+  (add-hook 'before-save-hook 'py-isort-before-save)
 #+END_SRC 
 
 * Yasnippet
