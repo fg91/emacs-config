@@ -73,6 +73,11 @@
    #+END_SRC
 
 ** auto-complete
+- Automatically integrates with most programming modes
+- But only enables basic completions like language specific keywords
+  or words in buffers with the same mode
+- Doesn't know anything about syntax but has interface for third party
+  packages to provide completions to it (e.g. Jedi)
 
    #+BEGIN_SRC emacs-lisp
      (use-package auto-complete
@@ -81,9 +86,11 @@
        (progn
          (ac-config-default)
          (global-auto-complete-mode t)
+         ;; If you like the menu, you can show it immediately
+         (setq ac-show-menu-immediately-on-auto-complete t)
          ))
    #+END_SRC
-
+   
 * Buffer management
   - Open a new file with `C-x C-f` creates a new buffer
   - Goto buffer `C-x b`. Creates new one if new name given. Type `?` for more info
@@ -174,7 +181,6 @@
    
 * Org-mode
 ** General
-   - Adding a link `C-c C-l`
    - Move levels up and down `M-up`
    - `C-c C-x C-w/M-w` kill/copy subtree
    - `C-c C-w` Refile subtree
@@ -270,7 +276,57 @@ Custom org-captures
   #+END_SRC
 * Python
   - get a console for the output `C-c C-p`
-  - run code `C-c C-c`
+  
+** elpy
+   - `C-c C-d` brings up documentation of functions, ...
+   - `M-x elpy-config`
+   - `C-c C-c` evaluate the current script or region in an interactive python shell
+   - `C-c C-y C-e` run current line in an interactive python shell
+   - Get Moving the current region working
+   - `C-c C-f` find file in current project (uses projectile)
+   - `C-c C-s` do a grep -r through the project
+   - `M-TAB` immediatley provide completion suggestions for a completion
+   - `M-.` go to definition and `M-*` to go back
+   - `C-c C-p` search the buffer for a list of definitions of classes and functions.
+     
+   #+BEGIN_SRC emacs-lisp
+     (use-package elpy
+       :ensure t
+       :config
+       (elpy-enable)
+       ;; Give each buffer its own dedicated shell
+       (add-hook 'elpy-mode-hook (lambda () (elpy-shell-toggle-dedicated-shell 1)))
+       (setq python-shell-interpreter "python"
+             python-shell-interpreter-args "-i")
+             )
+             
+   #+END_SRC
+
+#
+
+** Projectile
+Allows you to navigate between projects
+- `C-c p p` switch to project
+- `C-c p f` find file in current project
+- `C-c p k` kill all buffers for project
+#+BEGIN_SRC emacs-lisp
+(use-package projectile
+  :ensure t
+  :config
+  (progn
+    (projectile-global-mode)
+    (define-key projectile-mode-map (kbd "s-p") 'projectile-command-map)
+    (define-key projectile-mode-map (kbd "C-c p") 'projectile-command-map)
+    (setq projectile-project-search-path '("~/merantix/" "~/ml/"))
+    ))
+#+END_SRC
+
+** Sort imports
+#+BEGIN_SRC emacs-lisp
+  (use-package py-isort
+    :ensure t)
+  (add-hook 'before-save-hook 'py-isort-before-save)
+#+END_SRC 
 ** Fix bug 'Your ‘python-shell-interpreter’ doesn’t seem to support readline' 
    #+BEGIN_SRC emacs-lisp
    (with-eval-after-load 'python
@@ -284,7 +340,9 @@ Custom org-captures
        nil "_"))))
    #+END_SRC
 ** Jedi
-   Completion package for python
+- [[https://youtu.be/6BlTGPsjGJk?t=1431][Explanation]]
+- Python library for contextual parsing (extends auto-completion)
+- Not specific to emacs
 
    # #+BEGIN_SRC emacs-lisp
    #   (use-package epc
@@ -295,22 +353,6 @@ Custom org-captures
    #     (add-hook 'python-mode-hook 'jedi:setup)
    #     (add-hook 'python-mode-hook 'jedi:ac-setup))
    # #+END_SRC
-** elpy
-   - `C-c C-d` brings up documentation of functions, ...
-   
-   #+BEGIN_SRC emacs-lisp
-     (use-package elpy
-       :ensure t
-       :config
-       (elpy-enable))
-   #+END_SRC
-** Sort imports
-#+BEGIN_SRC emacs-lisp
-  (use-package py-isort
-    :ensure t)
-  (add-hook 'before-save-hook 'py-isort-before-save)
-#+END_SRC 
-
 * Yasnippet
  - chunks of code that you can easily expand
  - you can put your own snippets in .emacs.d/snippets
