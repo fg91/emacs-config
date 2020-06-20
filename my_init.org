@@ -293,17 +293,15 @@ Custom org-captures
      (use-package elpy
        :ensure t
        :config
-       (elpy-enable)
-       ;; Give each buffer its own dedicated shell
-       (add-hook 'elpy-mode-hook (lambda () (elpy-shell-toggle-dedicated-shell 1)))
-       (setq python-shell-interpreter "python"
-             python-shell-interpreter-args "-i")
-             )
-             
+       (progn
+         (elpy-enable)
+         ;; Give each buffer its own dedicated shell
+         (add-hook 'elpy-mode-hook (lambda () (elpy-shell-toggle-dedicated-shell 1)))
+         (setq python-shell-interpreter "python"
+               python-shell-interpreter-args "-i"))
+      )
    #+END_SRC
-
-#
-
+   
 ** Projectile
 Allows you to navigate between projects
 - `C-c p p` switch to project
