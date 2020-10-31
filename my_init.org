@@ -86,6 +86,7 @@
        (progn
          (ac-config-default)
          (global-auto-complete-mode t)
+         (add-to-list 'ac-modes 'ledger-mode)
          ;; If you like the menu, you can show it immediately
          (setq ac-show-menu-immediately-on-auto-complete t)
          ))
